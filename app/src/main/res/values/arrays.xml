@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="data_title">
+        <item>Cara memilih\ntoner yang baik</item>
+        <item>Cara memilih\nserum yang baik</item>
+        <item>Cara memilih\ntoner yang baik</item>
+    </string-array>
+    <string-array name="data_description">
+        <item>Mengandung bahan alami baik digunakan untuk kulit berminyak</item>
+        <item>Mengandung bahan alami baik digunakan untuk kulit berminyak</item>
+        <item>Mengandung bahan alami baik digunakan untuk kulit berminyak</item>
+    </string-array>
+</resources>

@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Skinchek AI</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_myskin">MySkin</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_sign_in">Sign In</string>
+    <string name="title_signIndesc">Reference site about Lorem\nIpsum, giving information on its</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="label_or_make_easy">Or make easy</string>
+    <string name="label_title_wawasan">Cara memilih\ntoner yang baik</string>
+    <string name="label_desc_wawasan">Mengandung bahan alami baik digunakan untuk kulit berminyak</string>
+    <string name="label_wawasan_harian">Wawasan harian</string>
+    <string name="label_date">24</string>
+    <string name="label_mounth">Wed\nJan 2023</string>
+    <string name="label_ambil_selfie">Ambil selfie</string>
+    <string-array name="tipe_kulit">
+        <item>Item 1</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+    </string-array>
+    <string-array name="tipe_jerawat">
+        <item>Item 1</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+    </string-array>
+</resources>

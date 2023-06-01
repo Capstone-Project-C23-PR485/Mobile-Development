@@ -1,8 +1,10 @@
 package com.android.skinchekai
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +15,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.android.skinchekai.databinding.ActivityMainBinding
+import com.android.skinchekai.ui.sigin.SigInActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var firebaseAuth: FirebaseAuth
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         overridePendingTransition(R.anim.slide_up, 0)
         supportActionBar?.hide()
+
+        firebaseAuth = FirebaseAuth.getInstance()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -59,6 +67,22 @@ class MainActivity : AppCompatActivity() {
                     navView.menu.findItem(R.id.navigation_profile).setIcon(R.drawable.ic_profile_active)
                 }
             }
+        }
+    }
+    override fun onStart() {
+        super.onStart()
+        // Initialize firebase user
+        val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
+        // Check condition
+        if (firebaseUser == null) {
+            // When user already sign in redirect to profile activity
+            startActivity(
+                Intent(
+                    this@MainActivity,
+                    SigInActivity::class.java
+                ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+            finish()
         }
     }
 }

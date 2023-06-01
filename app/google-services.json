@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "256420525441",
+    "project_id": "capstone-skincheckai",
+    "storage_bucket": "capstone-skincheckai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256420525441:android:971e55dfd8dc396af7a480",
+        "android_client_info": {
+          "package_name": "com.android.skinchekai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256420525441-snc0eg5g763b3adedfhdittkc0mt2jo3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.skinchekai",
+            "certificate_hash": "deb3cb78ce20e6440c4b0894f94892c7486961e7"
+          }
+        },
+        {
+          "client_id": "256420525441-suitnb2b9iffndau3u43edci5nl3he02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWaYdwJURzeOdSLQAFpm3x5q3wYAHWhPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256420525441-suitnb2b9iffndau3u43edci5nl3he02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

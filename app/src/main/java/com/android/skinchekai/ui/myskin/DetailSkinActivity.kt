@@ -12,6 +12,7 @@ import com.android.skinchekai.adapter.ImageResultAdapter
 import com.android.skinchekai.databinding.ActivityDetailSkinBinding
 import com.android.skinchekai.databinding.BottomSheetDialogLayoutBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 
 class DetailSkinActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailSkinBinding
@@ -20,6 +21,7 @@ class DetailSkinActivity : AppCompatActivity() {
     private lateinit var spinnerKulit: Spinner
     private lateinit var spinnerJerawat: Spinner
     private lateinit var btnGetRecomendation: AppCompatButton
+    private var showSnackbar = true
     private val imagesList = listOf(
         R.drawable.ic_place_holder,
         R.drawable.ic_place_holder,
@@ -35,9 +37,11 @@ class DetailSkinActivity : AppCompatActivity() {
         //initializing the adapter
         imageResultAdapter = ImageResultAdapter(imagesList)
 //        binding.viewPager.adapter = imageResultAdapter
-        binding.btnShowForm.setOnClickListener {
-            showFormDialog()
-        }
+//        binding.btnShowForm.setOnClickListener {
+//            showFormDialog()
+//        }
+
+        showSnackbarIfRequired()
 
     }
 
@@ -46,8 +50,26 @@ class DetailSkinActivity : AppCompatActivity() {
         bottomSheetDialogLayoutBinding = BottomSheetDialogLayoutBinding.inflate(inflater)
         val bottomSheetDialog = BottomSheetDialog(this, R.style.RoundedBottomSheetDialogStyle)
         bottomSheetDialog.setContentView(bottomSheetDialogLayoutBinding.root)
-
+        bottomSheetDialog.setOnDismissListener {
+            showSnackbar = true
+            showSnackbarIfRequired()
+        }
         bottomSheetDialog.show()
+    }
+
+    private fun showSnackbar(){
+        Snackbar.make(binding.parentLayout,"Get product recomendation", Snackbar.LENGTH_INDEFINITE)
+            .setAction("Get"){
+                showFormDialog()
+            }
+            .setActionTextColor(resources.getColor(R.color.orange))
+            .show()
+    }
+    private fun showSnackbarIfRequired(){
+        if (showSnackbar){
+            showSnackbar()
+            showSnackbar = false
+        }
     }
 
 //    private fun setUpViewPager() {

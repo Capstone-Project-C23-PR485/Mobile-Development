@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -18,7 +19,9 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlin.math.log
 
 class SigInActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivitySigInBinding
@@ -86,6 +89,9 @@ class SigInActivity : AppCompatActivity(), View.OnClickListener {
                                 // Check condition
                                 if (task.isSuccessful) {
                                     // When task is successful redirect to profile activity
+                                    val user: FirebaseUser? = firebaseAuth.currentUser
+                                    val token: String? = user?.getIdToken(false)?.result?.token
+                                    Log.d("Token: ", token.toString())
                                     startActivity(
                                         Intent(
                                             this@SigInActivity,
@@ -94,7 +100,7 @@ class SigInActivity : AppCompatActivity(), View.OnClickListener {
                                     )
                                     finish()
                                     // Display Toast
-                                    displayToast("Authentication successful")
+                                    displayToast("Authentication successful"+token)
                                 } else {
                                     // When task is unsuccessful display Toast
                                     displayToast(

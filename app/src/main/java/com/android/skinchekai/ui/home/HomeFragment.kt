@@ -1,6 +1,7 @@
 package com.android.skinchekai.ui.home
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.android.skinchekai.adapter.WawasanAdapter
 import com.android.skinchekai.databinding.FragmentHomeBinding
 import com.android.skinchekai.response.DataItem
 import com.android.skinchekai.response.WawasanResponse
+import com.android.skinchekai.ui.camera.CameraActivity
 import com.android.skinchekai.viewmodel.HomeViewModel
 import com.android.skinchekai.viewmodel.ViewModelFactory
 
@@ -36,6 +38,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.floatingActionButton2.setOnClickListener {
+            val intent = Intent(requireActivity(), CameraActivity::class.java)
+            startActivity(intent)
+        }
         homeViewModel.product.observe(requireActivity()){
             setProductList(it)
         }

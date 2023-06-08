@@ -30,6 +30,10 @@ class ViewModelFactory private constructor(
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(context) as T
         }
+
+        if (modelClass.isAssignableFrom(UploadImageViewModel::class.java)) {
+            return UploadImageViewModel(context) as T
+        }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
 }

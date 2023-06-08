@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,9 +16,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.android.skinchekai.databinding.ActivityMainBinding
+import com.android.skinchekai.network.AuthPreference
 import com.android.skinchekai.ui.sigin.SigInActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +37,11 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         firebaseAuth = FirebaseAuth.getInstance()
+        val user: FirebaseUser? = firebaseAuth.currentUser
+        val token: String? = user?.getIdToken(false)?.result?.token
+        val authPreference = AuthPreference(this)
+        token?.let { authPreference.setValue("key", it) }
+        Log.d("Token", token.toString())
 
         val navView: BottomNavigationView = binding.navView
 

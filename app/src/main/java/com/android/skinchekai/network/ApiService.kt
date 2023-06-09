@@ -1,6 +1,7 @@
 package com.android.skinchekai.network
 
 import com.android.skinchekai.response.ProductResponse
+import com.android.skinchekai.response.ProfileResponse
 import com.android.skinchekai.response.UploadImageResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -21,4 +22,9 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Part file: MultipartBody.Part
     ): Call<UploadImageResponse>
+
+    @GET("profile")
+    fun getProfile(
+        @Header("Authorization") authorization: String
+    ): Call<ProfileResponse>
 }

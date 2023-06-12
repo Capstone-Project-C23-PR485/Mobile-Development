@@ -37,6 +37,9 @@ class ViewModelFactory private constructor(
         if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             return ProfileViewModel(context) as T
         }
+        if (modelClass.isAssignableFrom(MySkinViewModel::class.java)) {
+            return MySkinViewModel(context) as T
+        }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
 }

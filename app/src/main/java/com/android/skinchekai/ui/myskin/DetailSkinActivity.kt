@@ -3,6 +3,8 @@ package com.android.skinchekai.ui.myskin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatButton
@@ -55,6 +57,33 @@ class DetailSkinActivity : AppCompatActivity() {
             showSnackbarIfRequired()
         }
         bottomSheetDialog.show()
+
+        bottomSheetDialogLayoutBinding.dropdownTipeKulit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = parent?.getItemAtPosition(position).toString()
+                getDataForItem(selectedItem)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Tidak ada item yang dipilih
+            }
+        }
+
+    }
+
+    private fun getDataForItem(selectedItem: String): Any {
+        return when (selectedItem) {
+            "dry" -> {
+                bottomSheetDialogLayoutBinding.tvSkinDesc.text = getString(R.string.skin_dry)
+            }
+            "greasy" -> {
+                bottomSheetDialogLayoutBinding.tvSkinDesc.text = getString(R.string.skin_greasy)
+            }
+            else -> {
+                // Item tidak dikenali, kembalikan data default
+                // Contoh: return dataDefault
+            }
+        }
     }
 
     private fun showSnackbar(){

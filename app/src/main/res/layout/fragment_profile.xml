@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parent"
     android:background="@color/background_log"
     tools:context=".ui.profile.ProfileFragment">
 
@@ -153,6 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -170,6 +172,14 @@
                     android:text="user@gmail.com"
                     android:textSize="10sp" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_edit_profile"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_edit_square" />
+
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 

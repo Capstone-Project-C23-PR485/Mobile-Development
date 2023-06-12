@@ -18,14 +18,11 @@
     <string name="label_date">24</string>
     <string name="label_mounth">Wed\nJan 2023</string>
     <string name="label_ambil_selfie">Ambil selfie</string>
+    <string name="skin_dry">Kulit kering adalah kondisi kulit di mana kulit kehilangan kelembaban dan cenderung terasa kering, kasar, terkelupas, dan terkadang terasa ketat.</string>
+    <string name="skin_greasy">Tipe kulit berminyak adalah kondisi di mana kelenjar sebaceous di kulit menghasilkan lebih banyak minyak alami (sebum) dari yang diperlukan.</string>
     <string-array name="tipe_kulit">
-        <item>Item 1</item>
-        <item>Item 2</item>
-        <item>Item 3</item>
-    </string-array>
-    <string-array name="tipe_jerawat">
-        <item>Item 1</item>
-        <item>Item 2</item>
-        <item>Item 3</item>
+        <item>Kering</item>
+        <item>Berminyak</item>
+        <item>Sensitif</item>
     </string-array>
 </resources>

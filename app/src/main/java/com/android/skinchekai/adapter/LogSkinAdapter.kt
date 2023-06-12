@@ -4,15 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.android.skinchekai.R
 import com.android.skinchekai.databinding.ItemLogSkinBinding
-import com.android.skinchekai.databinding.ItemWawasanHarianBinding
-import com.android.skinchekai.response.LogSkinResponse
+import com.android.skinchekai.response.LogDataItem
 import com.android.skinchekai.ui.myskin.DetailSkinActivity
+import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class LogSkinAdapter(private val context: Context, private val data: ArrayList<LogSkinResponse>) :
+class LogSkinAdapter(private val context: Context, private val listLogItem: List<LogDataItem>) :
     RecyclerView.Adapter<LogSkinAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemLogSkinBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,8 +20,32 @@ class LogSkinAdapter(private val context: Context, private val data: ArrayList<L
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
-        holder.binding.tvTitleResult.text = item.title
+        val item = listLogItem[position]
+        if (item.skinScore >= 90){
+            holder.binding.tvTitleResult.text = "Luar biasa"
+        }
+        holder.binding.tvScore.text = item.skinScore.toString()
+        Glide.with(context)
+            .load(item.picture)
+            .into(holder.binding.imgLog)
+
+        val inputDate = item.createdAt
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val dayFormat = SimpleDateFormat("EEE, dd", Locale.getDefault())
+        val mounthFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
+
+        try {
+            val date = inputFormat.parse(inputDate)
+            val day = dayFormat.format(date!!)
+            val mounth = mounthFormat.format(date)
+
+            holder.binding.tvDay.text = day
+            holder.binding.tvMounth.text = mounth
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         holder.binding.itemLog.setOnClickListener {
             val intent = Intent(context, DetailSkinActivity::class.java)
             context.startActivity(intent)
@@ -29,7 +53,7 @@ class LogSkinAdapter(private val context: Context, private val data: ArrayList<L
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return listLogItem.size
     }
 
     class ViewHolder(var binding: ItemLogSkinBinding) : RecyclerView.ViewHolder(binding.root)

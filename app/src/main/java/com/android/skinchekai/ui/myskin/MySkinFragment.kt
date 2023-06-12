@@ -3,32 +3,34 @@ package com.android.skinchekai.ui.myskin
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.skinchekai.R
 import com.android.skinchekai.adapter.LogSkinAdapter
-import com.android.skinchekai.adapter.WawasanAdapter
 import com.android.skinchekai.databinding.FragmentMySkinBinding
+import com.android.skinchekai.response.LogDataItem
 import com.android.skinchekai.response.LogSkinResponse
-import com.android.skinchekai.response.WawasanResponse
 import com.android.skinchekai.ui.camera.CameraActivity
-import java.io.File
+import com.android.skinchekai.viewmodel.MySkinViewModel
+import com.android.skinchekai.viewmodel.ViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MySkinFragment : Fragment() {
 
     private var _binding: FragmentMySkinBinding? = null
+    private val mySkinViewModel: MySkinViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity().application)
+    }
     private val binding get() = _binding!!
-    private val list = ArrayList<LogSkinResponse>()
     companion object {
         const val CAMERA_X_RESULT = 200
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
@@ -75,23 +77,31 @@ class MySkinFragment : Fragment() {
             startActivity(intent)
         }
 
-        list.addAll(getListWawasan())
-        showRecyclerList()
-    }
-    private fun getListWawasan(): ArrayList<LogSkinResponse> {
-        val dataTitle = resources.getStringArray(R.array.data_title)
-        val dataDescription = resources.getStringArray(R.array.data_description)
-        val listWawasan = ArrayList<LogSkinResponse>()
-        for (i in dataTitle.indices) {
-            val wawasan = LogSkinResponse(dataTitle[i], dataDescription[i])
-            listWawasan.add(wawasan)
+        mySkinViewModel.log.observe(requireActivity()){
+            showLog(it)
         }
-        return listWawasan
+
+        getDat()
     }
 
-    private fun showRecyclerList() {
-        binding.rvLogskin.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-        val wawasanAdapter = context?.let { LogSkinAdapter(it,list) }
-        binding.rvLogskin.adapter = wawasanAdapter
+    private fun getDat() {
+        val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("EEE\nMMM yyyy", Locale.getDefault())
+
+        val currentDate = Date()
+
+        val day = dayFormat.format(currentDate)
+        val date = dateFormat.format(currentDate)
+
+        binding.tvDay.text = day
+        binding.tvDate.text = date
+
     }
+
+    private fun showLog(dataLog: List<LogDataItem>?) {
+        binding.rvLogskin.layoutManager = LinearLayoutManager(requireContext())
+        val adapter = dataLog?.let { LogSkinAdapter(requireActivity(),it) }
+        binding.rvLogskin.adapter = adapter
+    }
+
 }

@@ -50,9 +50,9 @@ class SigInActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when(view?.id){
             R.id.btn_sigin -> {
-                val intent = Intent(this, MainActivity::class.java)
-                val options = ActivityOptions.makeCustomAnimation(this, R.anim.slide_up,0)
-                startActivity(intent, options.toBundle())
+//                val intent = Intent(this, MainActivity::class.java)
+//                val options = ActivityOptions.makeCustomAnimation(this, R.anim.slide_up,0)
+//                startActivity(intent, options.toBundle())
             }
             R.id.btn_sigin_with_google -> {
                 val intent: Intent = googleSignInClient.signInIntent

@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.skinchekai.R
+import com.android.skinchekai.adapter.ProductAdapter
+import com.android.skinchekai.adapter.ProductRecomendationAdapter
 import com.android.skinchekai.adapter.SliderAdapter
 import com.android.skinchekai.data.imageSlider
 import com.android.skinchekai.databinding.ActivityDetailSkinBinding
 import com.android.skinchekai.databinding.BottomSheetDialogLayoutBinding
+import com.android.skinchekai.response.DataItemRecomendation
 import com.android.skinchekai.viewmodel.DetailLogViewModel
 import com.android.skinchekai.viewmodel.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -24,49 +29,27 @@ class DetailSkinActivity : AppCompatActivity() {
     private val detailViewModel: DetailLogViewModel by viewModels {
         ViewModelFactory.getInstance(this.application)
     }
-
-
     lateinit var sliderAdapter: SliderAdapter
-    private val list= ArrayList<imageSlider>()
     private var showSnackbar = true
-    lateinit var imageUrl: ArrayList<String>
+    private var skinType = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailSkinBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
-
-
-        list.add(
-            imageSlider(
-                "https://practice.geeksforgeeks.org/_next/image?url=https%3A%2F%2Fmedia.geeksforgeeks.org%2Fimg-practice%2Fbanner%2Fdata-science-live-thumbnail.png&w=1920&q=75"
-            )
-        )
-        list.add(
-            imageSlider(
-                "https://practice.geeksforgeeks.org/_next/image?url=https%3A%2F%2Fmedia.geeksforgeeks.org%2Fimg-practice%2Fbanner%2Ffull-stack-node-thumbnail.png&w=1920&q=75"
-            )
-        )
-
-        imageUrl = ArrayList()
-
-        // on below line we are adding data to our image url array list.
-//        imageUrl =
-//            (imageUrl + "https://storage.googleapis.com/skincheckai-assets/facial-images/Leonardo-Dicaprio-Face-Closeup.jpg") as ArrayList<String>
-        imageUrl =
-            (imageUrl + "https://practice.geeksforgeeks.org/_next/image?url=https%3A%2F%2Fmedia.geeksforgeeks.org%2Fimg-practice%2Fbanner%2Fdata-science-live-thumbnail.png&w=1920&q=75") as ArrayList<String>
-        imageUrl =
-            (imageUrl + "https://practice.geeksforgeeks.org/_next/image?url=https%3A%2F%2Fmedia.geeksforgeeks.org%2Fimg-practice%2Fbanner%2Ffull-stack-node-thumbnail.png&w=1920&q=75") as ArrayList<String>
-
-
-        getAnalisysResult()
-
         showSnackbarIfRequired()
+        val idLog = intent.getIntExtra("id",0).toString()
+        getAnalisysResult(idLog)
+
+        binding.backButton.setOnClickListener {
+            onBackPressed()
+            finish()
+        }
 
     }
 
-    private fun getAnalisysResult() {
-        detailViewModel.getDetailLog("7")
+    private fun getAnalisysResult(idLod:String) {
+        detailViewModel.getDetailLog(idLod)
         detailViewModel.analisysResult.observe(this){
             sliderAdapter = SliderAdapter(it)
             binding.viewPagerImage.autoCycleDirection = SliderView.LAYOUT_DIRECTION_LTR
@@ -84,11 +67,23 @@ class DetailSkinActivity : AppCompatActivity() {
         val bottomSheetDialog = BottomSheetDialog(this, R.style.RoundedBottomSheetDialogStyle)
         bottomSheetDialog.setContentView(bottomSheetDialogLayoutBinding.root)
         bottomSheetDialog.setOnDismissListener {
-            showSnackbar = true
             showSnackbarIfRequired()
         }
         bottomSheetDialogLayoutBinding.btnGetRekomendasi.setOnClickListener {
-
+            detailViewModel.getProductRecomendation(skinType)
+            detailViewModel.productRecomendation.observe(this){
+                showProductRecomendation(it)
+            }
+            detailViewModel.isSuccess.observe(this){isSucces ->
+                if (isSucces){
+                    bottomSheetDialog.dismiss()
+                    showSnackbar = false
+                }else{
+                    bottomSheetDialog.dismiss()
+                    Toast.makeText(this, "Gagal mendapatkan product", Toast.LENGTH_SHORT).show()
+                    showSnackbar = true
+                }
+            }
         }
         bottomSheetDialog.show()
 
@@ -105,13 +100,28 @@ class DetailSkinActivity : AppCompatActivity() {
 
     }
 
+    private fun showProductRecomendation(productRecomendation: List<DataItemRecomendation>?) {
+        binding.rvProductRecomendation.layoutManager = LinearLayoutManager(this)
+        val adapter = productRecomendation?.let { ProductRecomendationAdapter(it) }
+        binding.rvProductRecomendation.adapter = adapter
+
+    }
+
+
+
     private fun getDataForItem(selectedItem: String): Any {
         return when (selectedItem) {
-            "dry" -> {
+            "Kering" -> {
                 bottomSheetDialogLayoutBinding.tvSkinDesc.text = getString(R.string.skin_dry)
+                skinType = "dry"
             }
-            "greasy" -> {
+            "Berminyak" -> {
                 bottomSheetDialogLayoutBinding.tvSkinDesc.text = getString(R.string.skin_greasy)
+                skinType = "oily"
+            }
+            "Sensitif" -> {
+                bottomSheetDialogLayoutBinding.tvSkinDesc.text = getString(R.string.skin_sensitive)
+                skinType = "sensitive"
             }
             else -> {
                 // Item tidak dikenali, kembalikan data default
@@ -131,7 +141,6 @@ class DetailSkinActivity : AppCompatActivity() {
     private fun showSnackbarIfRequired(){
         if (showSnackbar){
             showSnackbar()
-            showSnackbar = false
         }
     }
 

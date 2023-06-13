@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ProductRecomendationResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItem>,
+	val data: List<DataItemRecomendation>,
 
 	@field:SerializedName("message")
 	val message: String,
@@ -14,7 +14,7 @@ data class ProductRecomendationResponse(
 	val statusCode: Int
 )
 
-data class DataItem(
+data class DataItemRecomendation(
 
 	@field:SerializedName("image")
 	val image: String,

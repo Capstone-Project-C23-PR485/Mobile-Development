@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.camera" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,10 +19,17 @@
         android:theme="@style/Theme.SkinchekAI"
         tools:targetApi="31">
         <activity
-            android:name=".ui.myskin.DetailSkinActivity"
-            android:exported="false">
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.myskin.DetailSkinActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.camera.CameraResultActivity"
             android:exported="false" />
@@ -30,18 +38,11 @@
             android:exported="false" />
         <activity
             android:name=".ui.sigin.SigInActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:label="@string/app_name"/>
 
         <meta-data
             android:name="preloaded_fonts"

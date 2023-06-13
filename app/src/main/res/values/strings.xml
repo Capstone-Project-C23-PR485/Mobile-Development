@@ -20,6 +20,7 @@
     <string name="label_ambil_selfie">Ambil selfie</string>
     <string name="skin_dry">Kulit kering adalah kondisi kulit di mana kulit kehilangan kelembaban dan cenderung terasa kering, kasar, terkelupas, dan terkadang terasa ketat.</string>
     <string name="skin_greasy">Tipe kulit berminyak adalah kondisi di mana kelenjar sebaceous di kulit menghasilkan lebih banyak minyak alami (sebum) dari yang diperlukan.</string>
+    <string name="skin_sensitive">Kulit sensitif adalah kondisi kulit yang lebih rentan terhadap reaksi atau iritasi terhadap bahan atau rangsangan tertentu. </string>
     <string-array name="tipe_kulit">
         <item>Kering</item>
         <item>Berminyak</item>

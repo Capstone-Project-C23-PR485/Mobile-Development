@@ -48,6 +48,7 @@ class LogSkinAdapter(private val context: Context, private val listLogItem: List
 
         holder.binding.itemLog.setOnClickListener {
             val intent = Intent(context, DetailSkinActivity::class.java)
+                .putExtra("id", item.id)
             context.startActivity(intent)
         }
     }

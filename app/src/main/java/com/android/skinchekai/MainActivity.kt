@@ -25,7 +25,6 @@ import kotlin.math.log
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var firebaseAuth: FirebaseAuth
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +35,7 @@ class MainActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_up, 0)
         supportActionBar?.hide()
 
-        firebaseAuth = FirebaseAuth.getInstance()
-        val user: FirebaseUser? = firebaseAuth.currentUser
-        val token: String? = user?.getIdToken(false)?.result?.token
-        val authPreference = AuthPreference(this)
-        token?.let { authPreference.setValue("key", it) }
-        Log.d("Token", token.toString())
+
 
         val navView: BottomNavigationView = binding.navView
 
@@ -77,20 +71,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    override fun onStart() {
-        super.onStart()
-        // Initialize firebase user
-        val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
-        // Check condition
-        if (firebaseUser == null) {
-            // When user already sign in redirect to profile activity
-            startActivity(
-                Intent(
-                    this@MainActivity,
-                    SigInActivity::class.java
-                ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
-            finish()
-        }
-    }
+
 }

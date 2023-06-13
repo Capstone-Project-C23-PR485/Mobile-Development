@@ -47,10 +47,10 @@ class HomeFragment : Fragment() {
         }
         homeViewModel.isLoading.observe(requireActivity()){
             if (it){
-                binding.progressBar2.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.VISIBLE
                 binding.rvProduct.visibility = View.GONE
             }else {
-                binding.progressBar2.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
                 binding.rvProduct.visibility = View.VISIBLE
             }
         }

@@ -3,6 +3,7 @@ package com.android.skinchekai.network
 import com.android.skinchekai.data.UserUpdate
 import com.android.skinchekai.response.DetailLogResponse
 import com.android.skinchekai.response.LogResponse
+import com.android.skinchekai.response.ProductRecomendationResponse
 import com.android.skinchekai.response.ProductResponse
 import com.android.skinchekai.response.ProfileResponse
 import com.android.skinchekai.response.UploadImageResponse
@@ -55,5 +56,5 @@ interface ApiService {
     fun getProductRecomendation(
         @Header("Authorization") authorization: String,
         @Query("skinType") skinType: String
-    ): Call<ProductResponse>
+    ): Call<ProductRecomendationResponse>
 }

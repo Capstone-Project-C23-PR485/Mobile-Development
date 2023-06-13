@@ -19,12 +19,12 @@ class HomeViewModel(context: Context): ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
     private val authPreference = AuthPreference(context)
-    val key = authPreference.getValue("key")
     init {
         getProduct()
     }
 
     private fun getProduct() {
+        val key = authPreference.getValue("key")
         _isLoading.value= true
         val client = ApiConfig.getApiService().getProduct("Bearer $key")
         client.enqueue(object : Callback<ProductResponse> {

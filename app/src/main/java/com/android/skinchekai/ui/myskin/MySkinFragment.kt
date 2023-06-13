@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.skinchekai.adapter.LogSkinAdapter
 import com.android.skinchekai.databinding.FragmentMySkinBinding
 import com.android.skinchekai.response.LogDataItem
-import com.android.skinchekai.response.LogSkinResponse
 import com.android.skinchekai.ui.camera.CameraActivity
 import com.android.skinchekai.viewmodel.MySkinViewModel
 import com.android.skinchekai.viewmodel.ViewModelFactory

@@ -1,34 +1,35 @@
 package com.android.skinchekai.ui.myskin
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import androidx.appcompat.widget.AppCompatButton
-import androidx.viewpager2.widget.ViewPager2
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.android.skinchekai.R
-import com.android.skinchekai.adapter.ImageResultAdapter
+import com.android.skinchekai.adapter.SliderAdapter
+import com.android.skinchekai.data.imageSlider
 import com.android.skinchekai.databinding.ActivityDetailSkinBinding
 import com.android.skinchekai.databinding.BottomSheetDialogLayoutBinding
+import com.android.skinchekai.viewmodel.DetailLogViewModel
+import com.android.skinchekai.viewmodel.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.smarteist.autoimageslider.SliderView
+
 
 class DetailSkinActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailSkinBinding
     private lateinit var bottomSheetDialogLayoutBinding: BottomSheetDialogLayoutBinding
-    private lateinit var imageResultAdapter: ImageResultAdapter
-    private lateinit var spinnerKulit: Spinner
-    private lateinit var spinnerJerawat: Spinner
-    private lateinit var btnGetRecomendation: AppCompatButton
+    private val detailViewModel: DetailLogViewModel by viewModels {
+        ViewModelFactory.getInstance(this.application)
+    }
+
+
+    lateinit var sliderAdapter: SliderAdapter
+    private val list= ArrayList<imageSlider>()
     private var showSnackbar = true
-    private val imagesList = listOf(
-        R.drawable.ic_place_holder,
-        R.drawable.ic_place_holder,
-        R.drawable.ic_place_holder
-    )
+    lateinit var imageUrl: ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailSkinBinding.inflate(layoutInflater)
@@ -36,16 +37,46 @@ class DetailSkinActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
 
-        //initializing the adapter
-        imageResultAdapter = ImageResultAdapter(imagesList)
-//        binding.viewPager.adapter = imageResultAdapter
-//        binding.btnShowForm.setOnClickListener {
-//            showFormDialog()
-//        }
+        list.add(
+            imageSlider(
+                "https://practice.geeksforgeeks.org/_next/image?url=https%3A%2F%2Fmedia.geeksforgeeks.org%2Fimg-practice%2Fbanner%2Fdata-science-live-thumbnail.png&w=1920&q=75"
+            )
+        )
+        list.add(
+            imageSlider(
+                "https://practice.geeksforgeeks.org/_next/image?url=https%3A%2F%2Fmedia.geeksforgeeks.org%2Fimg-practice%2Fbanner%2Ffull-stack-node-thumbnail.png&w=1920&q=75"
+            )
+        )
+
+        imageUrl = ArrayList()
+
+        // on below line we are adding data to our image url array list.
+//        imageUrl =
+//            (imageUrl + "https://storage.googleapis.com/skincheckai-assets/facial-images/Leonardo-Dicaprio-Face-Closeup.jpg") as ArrayList<String>
+        imageUrl =
+            (imageUrl + "https://practice.geeksforgeeks.org/_next/image?url=https%3A%2F%2Fmedia.geeksforgeeks.org%2Fimg-practice%2Fbanner%2Fdata-science-live-thumbnail.png&w=1920&q=75") as ArrayList<String>
+        imageUrl =
+            (imageUrl + "https://practice.geeksforgeeks.org/_next/image?url=https%3A%2F%2Fmedia.geeksforgeeks.org%2Fimg-practice%2Fbanner%2Ffull-stack-node-thumbnail.png&w=1920&q=75") as ArrayList<String>
+
+
+        getAnalisysResult()
 
         showSnackbarIfRequired()
 
     }
+
+    private fun getAnalisysResult() {
+        detailViewModel.getDetailLog("7")
+        detailViewModel.analisysResult.observe(this){
+            sliderAdapter = SliderAdapter(it)
+            binding.viewPagerImage.autoCycleDirection = SliderView.LAYOUT_DIRECTION_LTR
+            binding.viewPagerImage.setSliderAdapter(sliderAdapter)
+            binding.viewPagerImage.scrollTimeInSec = 3
+            binding.viewPagerImage.isAutoCycle = true
+            binding.viewPagerImage.startAutoCycle()
+        }
+    }
+
 
     private fun showFormDialog() {
         val inflater = LayoutInflater.from(this)
@@ -55,6 +86,9 @@ class DetailSkinActivity : AppCompatActivity() {
         bottomSheetDialog.setOnDismissListener {
             showSnackbar = true
             showSnackbarIfRequired()
+        }
+        bottomSheetDialogLayoutBinding.btnGetRekomendasi.setOnClickListener {
+
         }
         bottomSheetDialog.show()
 
@@ -101,37 +135,5 @@ class DetailSkinActivity : AppCompatActivity() {
         }
     }
 
-//    private fun setUpViewPager() {
-//
-//        binding.viewPager.adapter = imageResultAdapter
-//
-//        //set the orientation of the viewpager using ViewPager2.orientation
-//        binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-//
-//        //select any page you want as your starting page
-//        val currentPageIndex = 1
-//        binding.viewPager.currentItem = currentPageIndex
-//
-//        // registering for page change callback
-//        binding.viewPager.registerOnPageChangeCallback(
-//            object : ViewPager2.OnPageChangeCallback() {
-//
-//                override fun onPageSelected(position: Int) {
-//                    super.onPageSelected(position)
-//
-//                    //update the image number textview
-//                   // binding.imageNumberTV.text = "${position + 1} / 4"
-//                }
-//            }
-//        )
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//
-//        // unregistering the onPageChangedCallback
-//        binding.viewPager.unregisterOnPageChangeCallback(
-//            object : ViewPager2.OnPageChangeCallback() {}
-//        )
-//    }
 }
+

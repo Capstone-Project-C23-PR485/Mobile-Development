@@ -1,6 +1,7 @@
 package com.android.skinchekai.network
 
 import com.android.skinchekai.data.UserUpdate
+import com.android.skinchekai.response.DetailLogResponse
 import com.android.skinchekai.response.LogResponse
 import com.android.skinchekai.response.ProductResponse
 import com.android.skinchekai.response.ProfileResponse
@@ -14,6 +15,8 @@ import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @GET("products?productType=all")
@@ -36,10 +39,21 @@ interface ApiService {
     fun getLogs(
         @Header("Authorization") authorization: String
     ):Call<LogResponse>
+    @GET("logs/{id}")
+    fun getDetailsLogs(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String
+    ):Call<DetailLogResponse>
 
     @PATCH("profile")
     fun updateProfile(
         @Header("Authorization") authorization: String,
         @Body userUpdate: UserUpdate
     ): Call<ProfileResponse>
+
+    @GET("products/recommendation")
+    fun getProductRecomendation(
+        @Header("Authorization") authorization: String,
+        @Query("skinType") skinType: String
+    ): Call<ProductResponse>
 }

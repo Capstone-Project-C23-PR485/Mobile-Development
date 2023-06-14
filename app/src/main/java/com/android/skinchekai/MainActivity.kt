@@ -25,6 +25,7 @@ import kotlin.math.log
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var firebaseAuth: FirebaseAuth
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +36,24 @@ class MainActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_up, 0)
         supportActionBar?.hide()
 
+        firebaseAuth = FirebaseAuth.getInstance()
+        val user: FirebaseUser? = firebaseAuth.currentUser
+        val authPreference = AuthPreference(this)
 
+        try {
+            user?.getIdToken(false)?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val token: String? = task.result?.token
+                    token?.let {
+                        authPreference.setValue("key", it)
+                    }
+                } else {
+                    Log.e("Token", "Gagal mendapatkan token: ${task.exception}")
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Token", "Kesalahan saat memperbarui token: ${e.message}")
+        }
 
         val navView: BottomNavigationView = binding.navView
 

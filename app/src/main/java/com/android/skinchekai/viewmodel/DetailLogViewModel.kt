@@ -26,6 +26,9 @@ class DetailLogViewModel(context: Context): ViewModel() {
     private val _isSuccess = MutableLiveData<Boolean>()
     val isSuccess: LiveData<Boolean> = _isSuccess
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     private val authPreference = AuthPreference(context)
     private val key = authPreference.getValue("key")
 
@@ -37,6 +40,7 @@ class DetailLogViewModel(context: Context): ViewModel() {
                 if (response.isSuccessful){
                     val responseBody =response.body()?.data
                     _analisysResult.value = responseBody?.analysisResult
+                    _isLoading.value = true
                     Log.d("statusLog",_analisysResult.toString())
                 }
                 Log.d("statusLog"," failed response")
@@ -44,6 +48,7 @@ class DetailLogViewModel(context: Context): ViewModel() {
 
             override fun onFailure(call: Call<DetailLogResponse>, t: Throwable) {
                 Log.d("statusLog"," failed")
+                _isLoading.value = true
             }
         })
     }

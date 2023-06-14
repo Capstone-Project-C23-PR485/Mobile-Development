@@ -23,8 +23,8 @@ class UploadImageViewModel(context: Context): ViewModel() {
     private val _isSuccess = MutableLiveData<Boolean>()
     val isSuccess: LiveData<Boolean> = _isSuccess
 
-    private val _uploadResponse = MutableLiveData<UploadImageResponse>()
-    val uploadResponse: LiveData<UploadImageResponse> = _uploadResponse
+    private val _uploadResponse = MutableLiveData<Data>()
+    val uploadResponse: LiveData<Data> = _uploadResponse
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -50,8 +50,7 @@ class UploadImageViewModel(context: Context): ViewModel() {
                 response: Response<UploadImageResponse>
             ) {
                 if (response.isSuccessful) {
-                    _uploadResponse.value = response.body()
-                    val responseBody = response.body()
+                    _uploadResponse.value = response.body()?.data
 //                    _idLog.value = responseBody.data.logId
                     _isSuccess.value = true
                     _isLoading.value = false

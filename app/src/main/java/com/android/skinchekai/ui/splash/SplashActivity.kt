@@ -21,23 +21,7 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         firebaseAuth = FirebaseAuth.getInstance()
-        val user: FirebaseUser? = firebaseAuth.currentUser
-        val authPreference = AuthPreference(this)
 
-        try {
-            user?.getIdToken(false)?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val token: String? = task.result?.token
-                    token?.let {
-                        authPreference.setValue("key", it)
-                    }
-                } else {
-                    Log.e("Token", "Gagal mendapatkan token: ${task.exception}")
-                }
-            }
-        } catch (e: Exception) {
-            Log.e("Token", "Kesalahan saat memperbarui token: ${e.message}")
-        }
 
         // Initialize firebase user
         val firebaseUser: FirebaseUser? = firebaseAuth.currentUser

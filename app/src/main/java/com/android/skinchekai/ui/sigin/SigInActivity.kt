@@ -89,9 +89,9 @@ class SigInActivity : AppCompatActivity(), View.OnClickListener {
                                 // Check condition
                                 if (task.isSuccessful) {
                                     // When task is successful redirect to profile activity
-                                    val user: FirebaseUser? = firebaseAuth.currentUser
-                                    val token: String? = user?.getIdToken(false)?.result?.token
-                                    Log.d("Token: ", token.toString())
+//                                    val user: FirebaseUser? = firebaseAuth.currentUser
+//                                    val token: String? = user?.getIdToken(false)?.result?.token
+//                                    Log.d("Token: ", token.toString())
                                     startActivity(
                                         Intent(
                                             this@SigInActivity,
@@ -100,7 +100,7 @@ class SigInActivity : AppCompatActivity(), View.OnClickListener {
                                     )
                                     finish()
                                     // Display Toast
-                                    displayToast("Authentication successful"+token)
+                                    displayToast("Authentication successful")
                                 } else {
                                     // When task is unsuccessful display Toast
                                     displayToast(

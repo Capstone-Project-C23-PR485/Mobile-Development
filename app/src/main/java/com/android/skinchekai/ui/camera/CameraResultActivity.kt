@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.android.skinchekai.MainActivity
 import com.android.skinchekai.databinding.ActivityCameraResultBinding
+import com.android.skinchekai.ui.myskin.DetailSkinActivity
 import com.android.skinchekai.viewmodel.UploadImageViewModel
 import com.android.skinchekai.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
@@ -94,6 +95,13 @@ class CameraResultActivity : AppCompatActivity() {
     private fun uploadCheck(isSuccess: Boolean) {
         if (isSuccess) {
             Toast.makeText(this, "Success upload image", Toast.LENGTH_SHORT).show()
+            var id = 0
+            uploadViewModel.uploadResponse.observe(this){
+                id = it.logId
+            }
+            val intent = Intent(this, DetailSkinActivity::class.java)
+                .putExtra("id", id)
+            startActivity(intent)
             finish()
         }else{
             Toast.makeText(this, "Failed upload image", Toast.LENGTH_SHORT).show()

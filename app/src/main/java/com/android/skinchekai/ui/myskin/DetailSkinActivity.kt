@@ -1,6 +1,8 @@
 package com.android.skinchekai.ui.myskin
 
+import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
@@ -39,7 +41,19 @@ class DetailSkinActivity : AppCompatActivity() {
         supportActionBar?.hide()
         showSnackbarIfRequired()
         val idLog = intent.getIntExtra("id",0).toString()
-        getAnalisysResult(idLog)
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Loading...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+
+        Handler().postDelayed({
+            getAnalisysResult(idLog)
+            detailViewModel.isLoading.observe(this){
+                if (it){
+                    progressDialog.cancel()
+                }
+            }
+        }, 7000)
 
         binding.backButton.setOnClickListener {
             onBackPressed()

@@ -1,6 +1,7 @@
 package com.android.skinchekai.ui.profile
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,13 +14,17 @@ import com.android.skinchekai.databinding.BottomSheetDialogLayoutBinding
 import com.android.skinchekai.databinding.BottomSheetDialogLayoutProfileBinding
 import com.android.skinchekai.databinding.FragmentHomeBinding
 import com.android.skinchekai.databinding.FragmentProfileBinding
+import com.android.skinchekai.network.AuthPreference
 import com.android.skinchekai.response.DataProfile
+import com.android.skinchekai.ui.sigin.SigInActivity
 import com.android.skinchekai.viewmodel.HomeViewModel
 import com.android.skinchekai.viewmodel.ProfileViewModel
 import com.android.skinchekai.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -48,6 +53,14 @@ class ProfileFragment : Fragment() {
         }
 
         binding.imgEditProfile.setOnClickListener { showBottomShet() }
+        binding.layoutLogout.setOnClickListener {
+            Firebase.auth.signOut()
+            val authPreference = AuthPreference(requireActivity())
+            authPreference.clear()
+            val intent = Intent(requireActivity(), SigInActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
     }
 
     private fun showBottomShet() {

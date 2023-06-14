@@ -234,7 +234,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Languange" />
+                        android:text="Language" />
 
                     <View
                         android:layout_width="match_parent"

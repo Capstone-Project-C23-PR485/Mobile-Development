@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
             android:text="Wed, 24"
+            android:textColor="@color/black"
             android:textSize="12sp" />
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:text="Jan 2023"
+            android:textColor="@color/black"
             android:textSize="10sp" />
     </LinearLayout>
 

@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
     }
     private fun setProductList(dataItems: List<DataItem>?) {
         binding.rvProduct.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = dataItems?.let { ProductAdapter(it) }
+        val adapter = dataItems?.let { ProductAdapter(requireContext(),it) }
         binding.rvProduct.adapter = adapter
 
     }
